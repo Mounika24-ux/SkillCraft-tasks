@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To-Do Web App</title>
+
+<style>
+    body{
+        margin:0;
+        font-family:"Poppins",sans-serif;
+        background:#1b1a28;
+        color:white;
+        display:flex;
+        justify-content:center;
+        padding:40px 0;
+    }
+
+    .container{
+        width:90%;
+        max-width:600px;
+        background:#262538;
+        padding:25px;
+        border-radius:20px;
+        box-shadow:0 0 20px rgba(0,0,0,0.4);
+    }
+
+    h2{
+        text-align:center;
+        margin-bottom:20px;
+    }
+
+    .inputBox{
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+        margin-bottom:20px;
+    }
+
+    input, textarea{
+        width:100%;
+        padding:12px;
+        border:none;
+        outline:none;
+        border-radius:12px;
+        background:#35344a;
+        color:white;
+    }
+
+    input:focus, textarea:focus{
+        background:#3f3e57;
+    }
+
+    .btn{
+        width:100%;
+        padding:12px;
+        border:none;
+        border-radius:12px;
+        background:#00d4ff;
+        color:black;
+        font-weight:bold;
+        cursor:pointer;
+        transition:0.3s;
+    }
+
+    .btn:hover{
+        background:#06b2d4;
+    }
+
+    .task{
+        background:#35344a;
+        padding:15px;
+        border-radius:12px;
+        margin-bottom:12px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        transition:0.3s;
+    }
+
+    .task.completed{
+        text-decoration:line-through;
+        opacity:0.6;
+    }
+
+    .task-title{
+        font-size:16px;
+        margin-bottom:5px;
+    }
+
+    .task-time{
+        font-size:13px;
+        color:#a8a7b8;
+    }
+
+    .actions button{
+        margin-left:5px;
+        padding:6px 10px;
+        border:none;
+        border-radius:8px;
+        cursor:pointer;
+        font-size:12px;
+        font-weight:bold;
+    }
+
+    .editBtn{ background:#ffc107; }
+    .deleteBtn{ background:#ff4e4e; color:white; }
+    .doneBtn{ background:#4caf50; color:white; }
+</style>
+</head>
+
+<body>
+<div class="container">
+
+    <h2>✨ To-Do Web App</h2>
+
+    <div class="inputBox">
+        <input type="text" id="title" placeholder="Task title">
+        <textarea id="desc" rows="2" placeholder="Task description"></textarea>
+        <input type="datetime-local" id="dateTime">
+        <button class="btn" onclick="addTask()">Add Task</button>
+    </div>
+
+    <h3>Your Tasks</h3>
+    <div id="taskList"></div>
+
+</div>
+
+<script>
+    let tasks = [];
+
+    function renderTasks(){
+        const list = document.getElementById("taskList");
+        list.innerHTML = "";
+
+        tasks.forEach((task, index) => {
+            let div = document.createElement("div");
+            div.className = "task " + (task.completed ? "completed" : "");
+
+            div.innerHTML = `
+                <div>
+                    <div class="task-title">${task.title}</div>
+                    <div class="task-time">🕒 ${task.dateTime}</div>
+                    <div class="task-time">${task.desc}</div>
+                </div>
+
+                <div class="actions">
+                    <button class="doneBtn" onclick="toggleComplete(${index})">✔</button>
+                    <button class="editBtn" onclick="editTask(${index})">✏️</button>
+                    <button class="deleteBtn" onclick="deleteTask(${index})">🗑</button>
+                </div>
+            `;
+
+            list.appendChild(div);
+        });
+    }
+
+    function addTask(){
+        const title = document.getElementById("title").value.trim();
+        const desc = document.getElementById("desc").value.trim();
+        const dateTime = document.getElementById("dateTime").value;
+
+        if(title === "" || dateTime === ""){
+            alert("Please enter task title and date/time.");
+            return;
+        }
+
+        tasks.push({
+            title,
+            desc,
+            dateTime,
+            completed:false
+        });
+
+        clearInputs();
+        renderTasks();
+    }
+
+    function clearInputs(){
+        document.getElementById("title").value = "";
+        document.getElementById("desc").value = "";
+        document.getElementById("dateTime").value = "";
+    }
+
+    function toggleComplete(index){
+        tasks[index].completed = !tasks[index].completed;
+        renderTasks();
+    }
+
+    function deleteTask(index){
+        tasks.splice(index, 1);
+        renderTasks();
+    }
+
+    function editTask(index){
+        const t = tasks[index];
+
+        let newTitle = prompt("Edit Title:", t.title);
+        if(newTitle === null) return;
+
+        let newDesc = prompt("Edit Description:", t.desc);
+        if(newDesc === null) return;
+
+        let newTime = prompt("Edit Date & Time:", t.dateTime);
+        if(newTime === null) return;
+
+        tasks[index].title = newTitle;
+        tasks[index].desc = newDesc;
+        tasks[index].dateTime = newTime;
+
+        renderTasks();
+    }
+</script>
+
+</body>
+</html>

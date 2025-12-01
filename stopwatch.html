@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stylish Stopwatch App</title>
+
+<style>
+    /* Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: radial-gradient(circle at top right, #1a1a2e, #0f0f1a);
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #ffffff;
+        overflow: hidden;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 450px;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(15px);
+        border-radius: 20px;
+        box-shadow: 0 0 35px rgba(0, 255, 255, 0.2);
+        text-align: center;
+        animation: fadeIn 0.9s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { transform: translateY(30px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    h1 {
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+    }
+
+    .time-display {
+        font-size: 3rem;
+        margin: 20px 0;
+        padding: 15px;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.1);
+        display: inline-block;
+        width: 100%;
+    }
+
+    .buttons {
+        margin-top: 20px;
+    }
+
+    button {
+        padding: 12px 22px;
+        margin: 8px;
+        border: none;
+        border-radius: 30px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: 0.3s;
+        color: white;
+    }
+
+    .start { background: #00c853; }
+    .pause { background: #ff9800; }
+    .reset { background: #d32f2f; }
+
+    button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 12px rgba(255,255,255,0.3);
+    }
+
+    .laps {
+        margin-top: 20px;
+        max-height: 200px;
+        overflow-y: auto;
+        padding-right: 10px;
+    }
+
+    .lap {
+        background: rgba(255,255,255,0.08);
+        padding: 10px;
+        margin: 5px 0;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        animation: slide 0.3s ease-in-out;
+    }
+
+    @keyframes slide {
+        from { transform: translateX(20px); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>⏱ Stylish Stopwatch</h1>
+
+    <div class="time-display" id="display">00:00:00</div>
+
+    <div class="buttons">
+        <button class="start" onclick="startTimer()">Start</button>
+        <button class="pause" onclick="pauseTimer()">Pause</button>
+        <button class="reset" onclick="resetTimer()">Reset</button>
+        <button class="pause" onclick="recordLap()">Lap</button>
+    </div>
+
+    <div class="laps" id="laps"></div>
+</div>
+
+<script>
+    let hr = 0, min = 0, sec = 0;
+    let timer = false;
+    let interval;
+
+    function startTimer() {
+        if (!timer) {
+            timer = true;
+            interval = setInterval(runTimer, 1000);
+        }
+    }
+
+    function pauseTimer() {
+        timer = false;
+        clearInterval(interval);
+    }
+
+    function resetTimer() {
+        timer = false;
+        clearInterval(interval);
+        hr = min = sec = 0;
+        document.getElementById("display").innerHTML = "00:00:00";
+        document.getElementById("laps").innerHTML = "";
+    }
+
+    function runTimer() {
+        sec++;
+        if (sec == 60) { sec = 0; min++; }
+        if (min == 60) { min = 0; hr++; }
+
+        let h = hr < 10 ? "0" + hr : hr;
+        let m = min < 10 ? "0" + min : min;
+        let s = sec < 10 ? "0" + sec : sec;
+
+        document.getElementById("display").innerHTML = `${h}:${m}:${s}`;
+    }
+
+    function recordLap() {
+        if (!timer) return;
+
+        let laps = document.getElementById("laps");
+        let h = hr < 10 ? "0" + hr : hr;
+        let m = min < 10 ? "0" + min : min;
+        let s = sec < 10 ? "0" + sec : sec;
+
+        let lap = document.createElement("div");
+        lap.className = "lap";
+        lap.innerText = `Lap: ${h}:${m}:${s}`;
+        laps.prepend(lap);
+    }
+</script>
+
+</body>
+</html>

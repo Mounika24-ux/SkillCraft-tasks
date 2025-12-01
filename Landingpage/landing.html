@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkillCraft Technology</title>
+  <link rel="stylesheet" href="landing.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- ==================== Navbar ==================== -->
+  <nav id="navbar">
+    <div class="logo">SkillCraft</div>
+    <ul>
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ==================== Hero Section ==================== -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h1>Welcome to <span>SkillCraft Technology</span></h1>
+      <p>Empowering innovators with the skills to shape the future.</p>
+      <button onclick="document.getElementById('services').scrollIntoView({ behavior: 'smooth' });">
+        Explore Our Services
+      </button>
+    </div>
+  </section>
+
+  <!-- ==================== About Section ==================== -->
+  <section id="about">
+    <h2>About Us</h2>
+    <p>
+      SkillCraft Technology provides cutting-edge training and solutions for tomorrow’s tech leaders. 
+      Our goal is to empower individuals and organizations with the knowledge to thrive in a digital-first world.
+    </p>
+  </section>
+
+  <!-- ==================== Services Section ==================== -->
+  <section id="services">
+    <h2>Our Services</h2>
+    <p>
+      We specialize in web development, app building, cloud consulting, and AI-driven innovations tailored to your business needs.
+    </p>
+    <div class="service-cards">
+      <div class="card">
+        <h3>Web Development</h3>
+        <p>Modern, responsive, and scalable websites designed to grow your online presence.</p>
+      </div>
+      <div class="card">
+        <h3>App Development</h3>
+        <p>Intuitive and powerful mobile and web applications for businesses and users alike.</p>
+      </div>
+      <div class="card">
+        <h3>Cloud Consulting</h3>
+        <p>Optimized cloud strategies to scale your operations and ensure data security.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== Contact Section ==================== -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <form id="contactForm">
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="Your Email" required />
+      <textarea placeholder="Your Message" rows="4" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <!-- ==================== Footer ==================== -->
+  <footer>
+    <p>© 2025 SkillCraft Technology. All rights reserved.</p>
+  </footer>
+
+  <script src="landing.js"></script>
+</body>
+</html>
